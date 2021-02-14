@@ -21,12 +21,7 @@ import QuestionnaireForm from "@/components/QuestionnaireForm.vue";
 import VotingForm from "@/components/VotingForm.vue";
 import VotingGraphs from "@/components/VotingGraphs.vue";
 import Notifier from '@/components/Shared/Notifier.vue'
-
-
-
 import { mapGetters } from "vuex";
-
-//todo ΤΑ ΚΟΜΠΟΝΕΝΤΣ ΠΑΙΔΙΑ ΤΟΥ ΧΟΜΕ ΠΡΕΠΕΙ ΝΑ ΦΥΓΟΥΝ ΑΠΟ ΤΑ ΣΑΡΕΔ ΚΑΙ ΝΑ ΠΑΝΕΣΤΟ views
 
 export default {
   name: "Home",
