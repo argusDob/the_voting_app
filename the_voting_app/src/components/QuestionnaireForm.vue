@@ -126,7 +126,6 @@ export default {
     },
     checkInputLenght(pInputValues, pLength) {
       if (pInputValues.length > pLength) {
-        console.log(pInputValues.length)
         this.notifications("Answers cannot be longer than 80 characters", "warning");
         this.disableInput = true;
         return true;
