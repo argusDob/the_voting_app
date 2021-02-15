@@ -13,9 +13,6 @@
           ></b-form-checkbox-group>
         </div>
       </div>
-      <!-- </b-form-group> -->
-
-      <!-- <button @click="submit()">Submit</button> -->
       <b-row>
         <confirm-button v-if="isNew" variantType="success" btnText="Vote" @click.native="submit()"></confirm-button>
       </b-row>
@@ -24,7 +21,7 @@
 </template>
 
 <script>
-//TODO CHECK FOR HOW TO PASS DATA
+//TODO 
 import { mapGetters, mapMutations } from "vuex";
 import ConfirmButton from "@/components/Shared/Buttons/Button.vue";
 
@@ -37,12 +34,12 @@ export default {
     return {
       questionnaire: undefined,
       theQuestion: undefined,
+      isNew: false,
       theAnswers: [],
       selected: [],
       options: [],
-      arr: [], //todo change name
+      arr: [], 
       list: [],
-      isNew: false
     };
   },
   computed: {
@@ -53,10 +50,7 @@ export default {
       if (typeof pNewQuestionnaire !== "undefined") {
         this.initVotingForm(pNewQuestionnaire);
       }
-      if (
-        typeof pNewQuestionnaire !== "undefined" &&
-        typeof pOldQuestionnaire !== "undefined"
-      ) {
+      if (typeof pNewQuestionnaire !== "undefined" && typeof pOldQuestionnaire !== "undefined") {
         this.resetTheComponent(pOldQuestionnaire, pNewQuestionnaire);
       }
     }
@@ -108,10 +102,9 @@ export default {
       });
       this.countVotes(this.arr);
     },
-    countVotes(pArr) {
+    countVotes(pArr) { //TODO
       const theRepeatedList = [];
       let theRepeatedValues = {};
-
       pArr.forEach(function(x) {
         theRepeatedValues[x] = (theRepeatedValues[x] || 0) + 1;
       });

@@ -35,7 +35,6 @@ export default {
       disableButton:undefined,
     };
   },
-
   methods: {
     ...mapMutations("app", ["SET_APP_STATE"]),
     ...mapGetters("app", ["returnAppState"]),

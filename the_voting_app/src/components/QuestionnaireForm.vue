@@ -22,7 +22,7 @@
         </b-row>
         <b-row class="mt-2" v-for="(item, i) in items" :key="i">
           <b-col sm="10 d-flex">
-            <b-form-input class="w-20" v-model="items[i]" :disabled="item.length  > 80"> </b-form-input>
+            <b-form-input class="w-20"  v-focus  v-model="items[i]" :disabled="item.length  > 80" placeholder="Please, type your answer."> </b-form-input>
             <my-button
               v-if="i === items.length-1"
               variantType="danger"
@@ -33,7 +33,7 @@
         </b-row>
         <b-row class="mt-2">
           <b-col class="d-flex justify-content-around">
-            <my-button variantType="info" btnText="Add Field" @click.native="addInput()"></my-button>
+            <my-button variantType="info" btnText="Add" @click.native="addInput()"></my-button>
             <my-button type="submit" variantType="success" btnText="Submit"></my-button>
             <my-button variantType="warning" btnText="Reset" @click.native="resetState()"></my-button>
           </b-col>
@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-//TODO CHECK FOR HOW TO PASS DATA
+
 import { mapMutations } from "vuex";
 import ConfirmButton from "@/components/Shared/Buttons/Button.vue";
 
@@ -63,6 +63,13 @@ export default {
       disableInput: false
     };
   },
+  directives: {
+  focus: {
+    inserted: function (el) {
+      el.focus()
+    },
+  }
+},
   methods: {
     ...mapMutations("voting", ["SET_QUESTIONNAIRE", "TRACK_VOTES"]),
     ...mapMutations("notification", ["notify", "setStatus"]),
@@ -71,7 +78,7 @@ export default {
       const staticFieldsHasValue = !this.checkStaticFieldsAreEmpty();
       if (staticFieldsHasValue) {
         if (this.items.length < 8) {
-          this.items.push(this.items.length);
+             this.items.push("");
         }
       } else {
         this.notifications("Please fill in first the above inputs", "warning");
@@ -90,18 +97,23 @@ export default {
           overLimit = this.checkInputLenght(inputValues, 80);
         });
       }
-      if (!overLimit) { theQuestionnaire.push(theFormsInputs); }
+      if (!overLimit) { theQuestionnaire.push(theFormsInputs);}
       return theQuestionnaire;
     },
     validateBeforeSubmit() { this.submit(); },
     submit() {
       const theQuestionnaire = this.getFormsInputs();
+      const isDynamicInputsEmpty = this.checkFormForEmptyDynamicFields(theQuestionnaire);
       if (this.checkStaticFieldsAreEmpty()) {
         this.notifications("All fields are mandatory", "warning");
+        return true;
+      }else if((isDynamicInputsEmpty)) { this.notifications("All fields are mandatory", "warning")
+       this.notifications("All fields are mandatory", "warning");
         return true;
       }else{
       this.notifications("Please answer to the following question " + this.theQuestion, "success");
       this.SET_QUESTIONNAIRE(theQuestionnaire);
+      return true;
       }
     },
     resetState() {
@@ -111,6 +123,7 @@ export default {
     },
     checkInputLenght(pInputValues, pLength) {
       if (pInputValues.length > pLength) {
+        console.log(pInputValues.length)
         this.notifications("Answers cannot be longer than 80 characters", "warning");
         this.disableInput = true;
         return true;
@@ -125,6 +138,12 @@ export default {
         return true;
       }
     },
+    checkFormForEmptyDynamicFields(pTheQuestionnaire){
+      if(pTheQuestionnaire.length === 0){
+        return true;
+      }
+
+    },
     resetForm() {
       if(confirm("This action is irreversible. Are you sure you want to continue?")){
       this.theQuestion = "";
@@ -132,6 +151,7 @@ export default {
       this.answer2 = "";
       this.items = [];
       this.notifications("","");
+       return true;
       }
     },
     removeField() {

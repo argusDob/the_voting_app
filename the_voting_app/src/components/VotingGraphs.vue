@@ -65,10 +65,7 @@ export default {
       return thePoints;
     },
      calculatePoints(pPoints){
-      //  console.log(pPoints)
-      //  let theTotalPoints = 0;
-        let totalVotes = 0;
-
+       let totalVotes = 0;
        pPoints.forEach(votes => {
           totalVotes += votes.value
        })
@@ -81,7 +78,6 @@ export default {
         this.isNew = true;
       }
     },
-
     resetTheComponent(pOldVotes, pNewVotes) {
       if (pOldVotes.length === 1 && pNewVotes.length === 0) {
         this.isNew = false;
