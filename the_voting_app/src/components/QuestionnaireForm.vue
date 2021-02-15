@@ -67,7 +67,7 @@ export default {
   focus: {
     inserted: function (el) {
       el.focus()
-    },
+    },  
   }
 },
   methods: {
@@ -117,9 +117,12 @@ export default {
       }
     },
     resetState() {
+      const isConfirmed = confirm("This action is irreversible. Are you sure you want to continue?");
+      if(isConfirmed){
       this.SET_QUESTIONNAIRE([]);
       this.TRACK_VOTES([]);
       this.resetForm();
+      }else{ return; }
     },
     checkInputLenght(pInputValues, pLength) {
       if (pInputValues.length > pLength) {
@@ -145,15 +148,12 @@ export default {
 
     },
     resetForm() {
-      if(confirm("This action is irreversible. Are you sure you want to continue?")){
       this.theQuestion = "";
       this.answer1 = "";
       this.answer2 = "";
       this.items = [];
       this.notifications("","");
-       return true;
-      }
-    },
+   },
     removeField() {
       this.items.pop();
     },
